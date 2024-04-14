@@ -257,7 +257,8 @@ class dxvk_tool_cli():
         exe = i
         bitness, dllfiles = self.dx.parse_exe(exe)
         tag = self._select_dxvk_tag()
-        self.dx.install_dxvk(exe, bitness, tag, files=dllfiles)
+        dxvkconf = self._get_dxvkconf_input()
+        self.dx.install_dxvk(exe, bitness, tag, files=dllfiles, dxvkconf=dxvkconf)
     
     def _update_all(self):
         print("updating all deployments")
@@ -288,6 +289,33 @@ class dxvk_tool_cli():
         self.dx.dxvk_cache = {}
         self.dx.save_dxvk_cache()
     
+    def _multiline_input(self):
+        data = []
+        run = True
+        while run == True:
+            try:
+                i = input()
+                data.append(str(i))
+            except KeyboardInterrupt:
+                run = False
+        return data
+    
+    def _get_dxvkconf_input(self):
+        ok = False
+        while ok == False:
+            print("please enter the dxvk.conf you want, line by line and finish with CTRL+C")
+            data = self._multiline_input()
+            print("your dxvk.conf will look like this:")
+            for line in data:
+                print(f"\t{line}")
+            print("press enter to accept or press CTRL+C to start inputting your dxvk.conf over")
+            try:
+                input()
+                ok = True
+            except KeyboardInterrupt:
+                pass
+        return "\n".join(data)
+
     def main_menu(self):
         print("main menu:")
         menu = {
