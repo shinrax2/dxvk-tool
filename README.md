@@ -1,5 +1,5 @@
 # dxvk-tool
-tool to install, update or remove dxvk installations
+tool to install, update or remove dxvk installations for windows
 
 # features
 - easy updating of all your dxvk installations
