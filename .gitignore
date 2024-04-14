@@ -159,7 +159,10 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-cache/*
-deployments.json
+dxvk_cache/*
+dxvk_deployments.json
 dxvk_cache.json
+d8vk_cache/*
+d8vk_deployments.json
+d8vk_cache.json
 test.py
