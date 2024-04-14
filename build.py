@@ -1,12 +1,12 @@
 import PyInstaller.__main__
 
-args_dxvk = [
+dxvk_args = [
     "--name=dxvk-tool",
     "--clean",
     "--onefile",
     "dxvk-tool.py"
 ]
-args_d8vk = [
+d8vk_args = [
     "--name=d8vk-tool",
     "--clean",
     "--onefile",

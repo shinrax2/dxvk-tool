@@ -166,3 +166,4 @@ d8vk_cache/*
 d8vk_deployments.json
 d8vk_cache.json
 test.py
+.python-version
