@@ -5,6 +5,7 @@ tool to install, update or remove dxvk installations for windows
 - easy updating of all your dxvk installations
 - automatic detection of used DXVK files (d3d9, d3d10core, d3d11, dxgi) and bitness based on game executable
 - caching of DXVK versions for faster installation
+- d8vk-tool for support of D8VK with the same features
 
 # requirements
 - python3
