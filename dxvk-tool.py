@@ -18,7 +18,7 @@ class dxvk_tool():
     CACHE_DIR = "./dxvk_cache"
     DXVK_CACHE_FILE = "./dxvk_cache.json"
     DEPLOYMENTS_FILE = "./dxvk_deployments.json"
-    VERSION = "v0.1"
+    VERSION = "v0.2"
     AUTHOR = "shinrax2"
     
     def __init__(self):

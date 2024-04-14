@@ -18,7 +18,7 @@ class d8vk_tool():
     CACHE_DIR = "./d8vk_cache"
     D8VK_CACHE_FILE = "./d8vk_cache.json"
     DEPLOYMENTS_FILE = "./d8vk_deployments.json"
-    VERSION = "v0.1"
+    VERSION = "v0.2"
     AUTHOR = "shinrax2"
     
     def __init__(self):
