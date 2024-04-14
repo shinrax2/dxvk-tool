@@ -206,7 +206,7 @@ class dxvk_tool_cli():
     def run(self):
         print(f"dxvk-tool {self.dx.VERSION} by {self.dx.AUTHOR}")
         while True:
-            if self.main_menu() == "EXIT":
+            if self._main_menu() == "EXIT":
                 break
         print("exiting dxvk-tool")
     
@@ -246,6 +246,76 @@ class dxvk_tool_cli():
         except KeyError:
             return self.dx.LATEST_TAG
     
+    def _edit_bitness(self, o_b):
+        supported_bitness = {
+            1 : "32bit" if o_b == 64 else "32bit[X]",
+            2 : "64bit" if o_b == 32 else "64bit[X]",
+        }
+        val = {
+            1: 32,
+            2: 64,
+        }
+        print("please select a bitness:")
+        return val[self._get_menu_input(supported_bitness)]
+    
+    def _commaseparated_input(self, menu):
+        print("please select a number of files to deploy as a comma separated list eg. 1,2,3,4,5,")
+        keys = menu.keys()
+        self._print_menu(menu)
+        ok = False
+        while ok == False:
+            rtn = []
+            i = input()
+            il = i.split(",")
+            for l in il:
+                try:
+                    if int(l) in keys:
+                        rtn.append(int(l))
+                except ValueError:
+                    pass
+            if len(rtn) != 0:
+                ok = True
+        return rtn
+
+    def _edit_dllfiles(self, o_d):
+        supported_dlls = {
+                1 : "d3d9.dll" if "d3d9.dll" not in o_d else "d3d9.dll[X]", 
+                2 : "d3d10core.dll" if "d3d10core.dll" not in o_d else "d3d10core.dll[X]",
+                3 : "d3d11.dll" if "d3d11.dll" not in o_d else "d3d11.dll[X]",
+                4 : "dxgi.dll" if "dxgi.dll" not in o_d else "dxgi.dll[X]",
+        }
+        val = {
+                1 : "d3d9.dll", 
+                2 : "d3d10core.dll",
+                3 : "d3d11.dll",
+                4 : "dxgi.dll",
+        }
+        rtn = []
+        fl = self._commaseparated_input(supported_dlls)
+        for f in fl:
+            rtn.append(val[f])
+        return rtn
+        
+    def _edit_bitness_and_files(self, exe, bitness, dllfiles):
+        n_b = 0
+        n_d = []
+        ok = False
+        print(f"automatic detection for '{exe}':\n\tbitness: {bitness}\n\tdll files: {'\n\t\t'.join(dllfiles)}")
+        while ok == False:
+            print("enter a number:")
+            menu = {
+                0 : "OK",
+                1 : "edit bitness",
+                2 : "edit dll files",
+            }
+            i = self._get_menu_input(menu)
+            if i == 0 or i == "":
+                ok = True
+            elif i == 1:
+                n_b = self._edit_bitness(bitness if n_b == 0 else n_b)
+            elif i == 2:
+                n_d = self._edit_dllfiles(dllfiles if len(n_d) == 0 else n_d)
+        return (bitness if n_b == 0 else n_b, dllfiles if len(n_d) == 0 else n_d)
     
     def _create_deployment(self):
         print("creating an deployment:")
@@ -256,6 +326,7 @@ class dxvk_tool_cli():
                 break
         exe = i
         bitness, dllfiles = self.dx.parse_exe(exe)
+        bitness, dllfiles = self._edit_bitness_and_files(exe, bitness, dllfiles)
         tag = self._select_dxvk_tag()
         dxvkconf = self._get_dxvkconf_input()
         self.dx.install_dxvk(exe, bitness, tag, files=dllfiles, dxvkconf=dxvkconf)
@@ -316,7 +387,7 @@ class dxvk_tool_cli():
                 pass
         return "\n".join(data)
 
-    def main_menu(self):
+    def _main_menu(self):
         print("main menu:")
         menu = {
             1: "list dxvk deployments",
