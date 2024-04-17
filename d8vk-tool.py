@@ -126,7 +126,7 @@ class d8vk_tool():
         self.save_deployments()
     
     def remove_d8vk(self, exe):
-        if self.is_exe_deployed == False:
+        if self.is_exe_deployed(exe) == False:
             print(f"no d8vk deployed for '{exe}'")
             return 
         for deploy in self.deployments:
@@ -144,7 +144,7 @@ class d8vk_tool():
         self.save_deployments()
     
     def update_d8vk(self, exe, tag=None):
-        if self.is_exe_deployed == False:
+        if self.is_exe_deployed(exe) == False:
             print(f"no d8vk deployed for '{exe}'")
             return 
         if tag is None:

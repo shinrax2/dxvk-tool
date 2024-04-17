@@ -140,7 +140,7 @@ class dxvk_tool():
         self.save_deployments()
     
     def remove_dxvk(self, exe):
-        if self.is_exe_deployed == False:
+        if self.is_exe_deployed(exe) == False:
             print(f"no dxvk deployed for '{exe}'")
             return 
         for deploy in self.deployments:
@@ -158,7 +158,7 @@ class dxvk_tool():
         self.save_deployments()
     
     def update_dxvk(self, exe, tag=None):
-        if self.is_exe_deployed == False:
+        if self.is_exe_deployed(exe) == False:
             print(f"no dxvk deployed for '{exe}'")
             return 
         if tag is None:
